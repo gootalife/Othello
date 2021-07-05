@@ -1,25 +1,22 @@
-﻿using ConsoleAppFramework;
-using Microsoft.Extensions.Hosting;
-using Othello.Lib;
+﻿using Othello.Lib;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Threading.Tasks;
 using CSL = System.Console;
 
 namespace Othello.Console {
-    public class Program : ConsoleAppBase {
+    public class Program {
         private const string esc = "\u001b";
 
-        public static async Task Main(string[] args) {
-            await Host.CreateDefaultBuilder().RunConsoleAppFrameworkAsync<Program>(args);
+        public static void Main(string[] args) {
+            Run();
         }
 
-        public void Run() {
+        public static void Run() {
             var othello = new OthelloGame();
             while(true) {
-                ClearConsole();
+                CSL.Clear();
                 othello.SetCanPut();
                 PrintBoard(othello.Board, othello.Player);
                 // 置ける場所があるなら置く
@@ -59,11 +56,6 @@ namespace Othello.Console {
                 CSL.WriteLine("引き分けです。");
             }
             CSL.ReadKey();
-        }
-
-        private static void ClearConsole() {
-            CSL.Write($"{esc}[2J");
-            CSL.Write($"{esc}[1;1H");
         }
 
         private static void PrintBoard(Cell[,] board, Player player) {
